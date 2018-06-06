@@ -15,6 +15,10 @@ const int videoDuration  = 5;
 @property (nonatomic, strong) IBOutlet SDRecordButton *recordButton;
 @property (nonatomic, strong)          NSTimer        *progressTimer;
 @property (nonatomic)                  CGFloat        progress;
+
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *recordBtnW;
+
 @end
 
 @implementation ViewController
@@ -24,7 +28,16 @@ const int videoDuration  = 5;
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	[self randomColorTapped:nil];
+//    [self randomColorTapped:nil];
+    
+
+    
+    
+    // Add Targets
+    [self.recordButton addTarget:self action:@selector(recording) forControlEvents:UIControlEventTouchDown];
+    [self.recordButton addTarget:self action:@selector(pausedRecording) forControlEvents:UIControlEventTouchUpInside];
+    [self.recordButton addTarget:self action:@selector(pausedRecording) forControlEvents:UIControlEventTouchUpOutside];
+    
 }
 
 - (void)configureButtonWithColor:(UIColor*)color progressColor:(UIColor *)progressColor {
@@ -32,11 +45,6 @@ const int videoDuration  = 5;
 	// Configure colors
 	self.recordButton.buttonColor = color;
 	self.recordButton.progressColor = progressColor;
-	
-	// Add Targets
-	[self.recordButton addTarget:self action:@selector(recording) forControlEvents:UIControlEventTouchDown];
-	[self.recordButton addTarget:self action:@selector(pausedRecording) forControlEvents:UIControlEventTouchUpInside];
-	[self.recordButton addTarget:self action:@selector(pausedRecording) forControlEvents:UIControlEventTouchUpOutside];
 	
 }
 
@@ -65,17 +73,19 @@ const int videoDuration  = 5;
 }
 
 - (IBAction)randomColorTapped:(id)sender {
-	
-	CGFloat hue1 = ( arc4random() % 256 / 256.0 );
-	CGFloat hue2 = ( arc4random() % 256 / 256.0 );
-	UIColor *buttonColor = [UIColor colorWithHue:hue1 saturation:0.95f brightness:0.89f alpha:1];
-	UIColor *progressColor = [UIColor colorWithHue:hue2 saturation:0.95f brightness:0.89f alpha:1];
-	
-	SDRecordButton *btnCopy = [[SDRecordButton alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame)-65/2, CGRectGetMidY(self.view.frame)-65/2, 65, 65)];
-	[self.recordButton removeFromSuperview];
-	self.recordButton = btnCopy;
-	[self configureButtonWithColor:buttonColor progressColor:progressColor];
-	[self.view addSubview:self.recordButton];
+	_recordBtnW.constant = 60;
+    
+    
+//    CGFloat hue1 = ( arc4random() % 256 / 256.0 );
+//    CGFloat hue2 = ( arc4random() % 256 / 256.0 );
+//    UIColor *buttonColor = [UIColor colorWithHue:hue1 saturation:0.95f brightness:0.89f alpha:1];
+//    UIColor *progressColor = [UIColor colorWithHue:hue2 saturation:0.95f brightness:0.89f alpha:1];
+//
+//    SDRecordButton *btnCopy = [[SDRecordButton alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame)-65/2, CGRectGetMidY(self.view.frame)-65/2, 65, 65)];
+//    [self.recordButton removeFromSuperview];
+//    self.recordButton = btnCopy;
+//    [self configureButtonWithColor:buttonColor progressColor:progressColor];
+//    [self.view addSubview:self.recordButton];
 	
 }
 

@@ -73,14 +73,7 @@
         
         _circleLayer = [CALayer layer];
         _circleLayer.backgroundColor = mainColor.CGColor;
-        
-        CGFloat size = self.frame.size.width/1.5;
-        _circleLayer.bounds = CGRectMake(0, 0, size, size);
-        _circleLayer.anchorPoint = CGPointMake(0.5, 0.5);
-        _circleLayer.position = (CGPoint){CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds)};
-        
-        _circleLayer.cornerRadius = size/2;
-        
+    
         [layer insertSublayer:_circleLayer atIndex:0];
     }
     
@@ -90,25 +83,14 @@
         _circleBorder.backgroundColor = [UIColor clearColor].CGColor;
         _circleBorder.borderWidth = 1;
         _circleBorder.borderColor = mainColor.CGColor;
-        
-        _circleBorder.bounds = CGRectMake(0, 0, self.bounds.size.width-1.5f, self.bounds.size.height-1.5f);
-        _circleBorder.anchorPoint = CGPointMake(0.5, 0.5);
-        _circleBorder.position = (CGPoint){CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds)};
-        
-        _circleBorder.cornerRadius = self.frame.size.width/2;
-
         [layer insertSublayer:_circleBorder atIndex:0];
     }
     
     if (!_progressLayer) {
 
-        CGFloat startAngle = M_PI + M_PI_2;
-        CGFloat endAngle = M_PI * 3 + M_PI_2;
-        CGPoint centerPoint = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-        
         _gradientMaskLayer = [self gradientMask];
         _progressLayer = [CAShapeLayer layer];
-        _progressLayer.path = [UIBezierPath bezierPathWithArcCenter:centerPoint radius:self.frame.size.width/2-2 startAngle:startAngle endAngle:endAngle clockwise:YES].CGPath;
+        
         _progressLayer.backgroundColor = [UIColor clearColor].CGColor;
         _progressLayer.fillColor = nil;
         _progressLayer.strokeColor = [UIColor blackColor].CGColor;
@@ -141,11 +123,24 @@
 
 - (void)layoutSubviews {
 
+    CGFloat size = self.frame.size.width/1.5;
+    _circleLayer.bounds = CGRectMake(0, 0, size, size);
     _circleLayer.anchorPoint = CGPointMake(0.5, 0.5);
     _circleLayer.position = (CGPoint){CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds)};
+    _circleLayer.cornerRadius = size/2;
+    
 
+    _circleBorder.bounds = CGRectMake(0, 0, self.bounds.size.width-1.5f, self.bounds.size.height-1.5f);
     _circleBorder.anchorPoint = CGPointMake(0.5, 0.5);
     _circleBorder.position = (CGPoint){CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds)};
+    _circleBorder.cornerRadius = self.frame.size.width/2;
+    
+    
+    CGFloat startAngle = M_PI + M_PI_2;
+    CGFloat endAngle = M_PI * 3 + M_PI_2;
+    CGPoint centerPoint = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+    _progressLayer.path = [UIBezierPath bezierPathWithArcCenter:centerPoint radius:self.frame.size.width/2-2 startAngle:startAngle endAngle:endAngle clockwise:YES].CGPath;
+
     
     [super layoutSubviews];
 }
